@@ -22,7 +22,7 @@ add_custom_target(copy_resources ALL
 )
 
 # Add the executable for game
-add_executable(space_invaders main.cpp "game_system.cpp")
+add_executable(space_invaders main.cpp "game_system.cpp" "ship.cpp")
 
 add_dependencies(space_invaders copy_resources)
 
