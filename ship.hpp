@@ -18,6 +18,9 @@ public:
 	// Update, virtual so can be overridden, but not pure virtual
 	virtual void update(const float& dt);
 
+	// Move the ship down, virtual so invaders can override
+	virtual void move_down();
+
 protected:
 	sf::IntRect _sprite;
 };
@@ -28,6 +31,9 @@ public:
 	Invader(const Invader& inv);
 	Invader(sf::IntRect ir, sf::Vector2f pos);
 	void update(const float& dt) override;
+
+	static bool direction;
+	static float speed;
 };
 
 

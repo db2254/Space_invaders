@@ -40,6 +40,9 @@ void GameSystem::reset() {
 }
 
 void GameSystem::clean() {
+    for (std::shared_ptr<Ship>& ship : ships)
+        ship.reset();//free up the memory of this shared pointer
+    ships.clear();//clear the vector to be sure we free up any memory left.
 }
 
 void GameSystem::update(const float& dt) {
