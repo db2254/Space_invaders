@@ -5,6 +5,8 @@
 #include "game_system.hpp"
 #include "ship.hpp"
 
+using param = Parameters;
+
 
 // Static variable definitions
 sf::Texture GameSystem::spritesheet;
@@ -16,12 +18,25 @@ void GameSystem::init() {
     if (!spritesheet.loadFromFile("res/img/invaders_sheet.png")) {
         std::cerr << "Failed to load spritesheet!" << std::endl;
     }
-    invader.setTexture(spritesheet);
-    invader.setTextureRect(sf::IntRect({ 0, 0 }, { Parameters::sprite_size, Parameters::sprite_size }));
+    reset();
+}
 
+void GameSystem::reset() {
+    // Clear existing ships if needed
+    ships.clear();
 
-    std::shared_ptr<Invader> inv = std::make_shared<Invader>(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(32, 32)), sf::Vector2f{ 100,100 });
-    ships.push_back(inv); // This is when the copy instructor is called
+    // Create invaders in a grid and add them to ships vector
+    for (int r = 0; r < param::rows; ++r) {
+        sf::IntRect rect(sf::Vector2i(32 * r, 0), sf::Vector2i(32, 32));
+        for (int c = 0; c < param::columns; ++c) {
+            sf::Vector2f position(
+                c * (param::sprite_size + param::spacing) + param::sprite_size / 2.f,
+                r * (param::sprite_size + param::spacing) + param::sprite_size / 2.f
+            );
+            std::shared_ptr<Invader> inv = std::make_shared<Invader>(rect, position);
+            ships.push_back(inv);
+        }
+    }
 }
 
 void GameSystem::clean() {
@@ -34,7 +49,6 @@ void GameSystem::update(const float& dt) {
 }
 
 void GameSystem::render(sf::RenderWindow& window) {
-    window.draw(invader);
 
     for (const std::shared_ptr<Ship>& s : ships) {
         window.draw(*(s.get()));

@@ -5,4 +5,7 @@ struct Parameters {
 	static constexpr int game_width = 800;
 	static constexpr int game_height = 600;
 	static constexpr int sprite_size = 32;
+	static constexpr int spacing = 18;
+	static constexpr int rows = 5;
+	static constexpr int columns = 12;
 };
