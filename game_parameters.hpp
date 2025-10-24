@@ -11,4 +11,5 @@ struct Parameters {
 	static constexpr int columns = 12;
 	static constexpr int down = 24;
 	static constexpr int acc = 10.f;
+	static constexpr int player_speed = 100.f;
 };

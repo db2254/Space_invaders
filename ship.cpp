@@ -27,9 +27,11 @@ void Ship::update(const float &dt) {}
 Ship::~Ship() = default;
 
 Invader::Invader() : Ship() {}
+
 Invader::Invader(const Invader& inv) : Ship(inv) {}
+
 Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) {
-	setOrigin(sf::Vector2f(16.f, 16.f));
+	setOrigin(param::sprite_size / 2.f, param::sprite_size / 2.f);;
 	setPosition(pos);
 }
 
@@ -48,5 +50,30 @@ void Invader::update(const float& dt) {
 		for (std::shared_ptr<Ship>& ship : gs::ships) {
 			ship->move_down();
 		}
+	}
+}
+
+Player::Player() :
+	Ship(sf::IntRect(sf::Vector2i(param::sprite_size * 5, param::sprite_size),
+		sf::Vector2i(param::sprite_size, param::sprite_size))) {
+	setOrigin(param::sprite_size / 2.f, param::sprite_size / 2.f);
+	setPosition(param::game_width / 2.f, param::game_height
+		- static_cast<float>(param::sprite_size));
+}
+
+
+void Player::update(const float& dt) {
+	Ship::update(dt);
+
+	// Move left
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) &&
+		getPosition().x > param::sprite_size / 2.f) {
+		move(-param::player_speed * dt, 0);
+	}
+
+	// Move right
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) &&
+		getPosition().x < param::game_width - param::sprite_size / 2.f) {
+		move(param::player_speed * dt, 0); 
 	}
 }

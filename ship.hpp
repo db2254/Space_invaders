@@ -36,6 +36,14 @@ public:
 	static float speed;
 };
 
+class Player : public Ship {
+public:
+	Player();
+	void update(const float& dt) override;
+	void move_down() override {}
+	static constexpr int speed = 100.f;
+};
+
 
 
 

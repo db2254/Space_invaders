@@ -25,6 +25,8 @@ void GameSystem::reset() {
     // Clear existing ships if needed
     ships.clear();
 
+    std::shared_ptr<Ship> player = std::make_shared<Player>();
+    ships.push_back(player);
     // Create invaders in a grid and add them to ships vector
     for (int r = 0; r < param::rows; ++r) {
         sf::IntRect rect(sf::Vector2i(32 * r, 0), sf::Vector2i(32, 32));
